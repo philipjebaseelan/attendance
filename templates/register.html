@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+register{% extends "layout.html" %}
 
 {% block main %}
 
@@ -7,24 +7,19 @@
             <hr>
             <form name="form" action="/register" method="post" onsubmit="return validation()">
                 <div class="form-group" id="register_form">
-                    <input id="register-text-field" autocomplete="off" autofocus class="form-control" name="name" placeholder="Name" type="text">
-                    <small id="message" class="register-field"></small>
+                    <input id="register-name" autocomplete="off" autofocus class="form-control" name="name" placeholder="Name" type="text">
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-text-field" autocomplete="off" autofocus class="form-control" name="email" placeholder="Email Address" type="email">
-                    <small id="message" class="register-field">Error Message</small>
+                    <input id="register-email" autocomplete="off" class="form-control" name="email" placeholder="Email Address" type="email" >
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-text-field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-                    <small id="message" class="register-field">Error Message</small>
+                    <input id="register-username" autocomplete="off" class="form-control" name="username" placeholder="Username" type="text" >
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-text-field" class="form-control" name="password" placeholder="Password" type="password">
-                    <small id="message" class="register-field">Error Message</small>
+                    <input id="register-password" class="form-control" name="password" placeholder="Password" type="password" >
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-text-field" class="form-control" name="confirm" placeholder="Confirm Password" type="password">
-                    <small id="message" class="register-field">Error Message</small>
+                    <input id="register-confirm" class="form-control" name="confirm" placeholder="Confirm Password" type="password" >
                 </div>
                 <button class="btn btn-primary" type="submit">Register</button>
             </form>
@@ -32,7 +27,7 @@
             <hr>
 
             <div class="container signin">
-            <p>Already have an account? <a href="#">Sign in</a>.</p>
+            <p>Already have an account? <a href="/">Sign in</a>.</p>
             </div>
 
 

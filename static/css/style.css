@@ -27,27 +27,7 @@ main .form-control{
     border:2px solid #e74c3c;
 }
 
-.register-field{
-    font-size:0.75rem;
-    color:red;
-    text-align:center;
-    position: absolute;
-    left:875px;
-    padding-top: 2.2%;
-    visibility:hidden;
-}
-
-.register-field.error{
-    font-size:0.75rem;
-    color:red;
-    text-align:center;
-    position: absolute;
-    left:875px;
-    padding-top: 2.2%;
-    visibility:visible;
-}
-
 #register_form{
-    padding-bottom:30px;
+    padding-bottom:10px;
     border-radius:5px;
 }
