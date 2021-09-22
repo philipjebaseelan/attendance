@@ -30,3 +30,9 @@ def register():
         return render_template("register.html", users=new_user)
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("login.html")

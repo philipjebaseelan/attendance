@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+            <h1>Sign In</h1>
+            <hr>
+            <form name="register-form" action="/login" method="post">
+                <div class="form-group" id="register_form">
+                    <input id="register-name" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+                </div>
+                <div class="form-group" id="register_form">
+                    <input id="register-email" autocomplete="off" class="form-control" name="password" placeholder="Password" type="password" >
+                </div>
+                <button class="btn btn-primary" type="submit">Sign In</button>
+            </form>
+
+            <hr>
+
+            <div class="container signin">
+            <p> Don't have an account? <a href="/">Register</a>.</p>
+            </div>
+
+
+{% endblock %}
