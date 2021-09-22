@@ -82,3 +82,45 @@ function register_validate()
         return true;
     }
 }
+
+
+
+
+function signin_empty()
+{
+    var username = document.forms["signin-form"]["username"];
+    var password = document.forms["signin-form"]["password"];
+
+    let info = [username, password]
+    let header = ['username', 'password']
+
+    let valid = 0;
+    let invalid = 0;
+
+    let empty_message = 'Please enter your ';
+
+    for(let i = 0; i < info.length; i++)
+    {
+        if(info[i].value == '')
+        {
+            alert(empty_message.concat(header[i]));
+            document.getElementById('signin-' +header[i]).className += ' error'
+            invalid++;
+        }
+        if(info[i].value != '')
+        {
+            document.getElementById('signin-'+header[i]).className = 'form-control';
+            valid++;
+        }
+    }
+
+    if(invalid > 0)
+    {
+        return false;
+    }
+    else(valid == 2)
+    {
+        return true;
+    }
+
+}

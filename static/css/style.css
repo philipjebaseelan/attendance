@@ -31,3 +31,9 @@ main .form-control{
     padding-bottom:10px;
     border-radius:5px;
 }
+
+/* login.html */
+#signin_form{
+    padding-bottom:10px;
+    border-radius:5px;
+}
