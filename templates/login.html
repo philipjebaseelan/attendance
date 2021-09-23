@@ -1,13 +1,20 @@
 {% extends "layout.html" %}
 
 {% block main %}
+           
+            {% for field, errors in form.errors.items() %}
+                <small class="form-text text-muted ">
+                    {{ ', '.join(errors) }}
+                </small>
+            {% endfor %}
 
             <h1>Sign In</h1>
             <p>Please sign in to continue.</p>
             <hr>
-            <form name="signin-form" action="/login" method="post" onsubmit="return signin_empty();">
+            <form name="signin-form" action="/login" method="post" >
+                {{ form.csrf_token() }}
                 <div class="form-group" id="signin_form">
-                    <input id="signin-username" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+                   {{ form.username(class="form-control", placeholder="Username") }}
                 </div>
                 <div class="form-group" id="signin_form">
                     <input id="signin-password" autocomplete="off" class="form-control" name="password" placeholder="Password" type="password" >

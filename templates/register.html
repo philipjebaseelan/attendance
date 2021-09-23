@@ -5,21 +5,23 @@
             <h1>Register</h1>
             <p>Please fill in this form to create an account.</p>
             <hr>
-            <form name="register-form" action="/register" method="post" onsubmit="return !!(register_empty() & register_validate());">
+            <form name="register-form" action="/register" method="post">
+                {{ form.csrf_token() }}
                 <div class="form-group" id="register_form">
-                    <input id="register-name" autocomplete="off" autofocus class="form-control" name="name" placeholder="Name" type="text">
+                    {{ form.name(class="form-control", placeholder="Name", autocomplete="off") }}
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-email" autocomplete="off" class="form-control" name="email" placeholder="Email Address" type="email" >
+                    {{ form.email(class="form-control", placeholder="Email Address", autocomplete="off", type="email") }}
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-username" autocomplete="off" class="form-control" name="username" placeholder="Username" type="text" >
+                    {{ form.username(class="form-control", placeholder="Username", autocomplete="off") }}
+                </div>
+
+                <div class="form-group" id="register_form">
+                    {{ form.password(class="form-control", placeholder="Password", autocomplete="off") }}
                 </div>
                 <div class="form-group" id="register_form">
-                    <input id="register-password" class="form-control" name="password" placeholder="Password" type="password" >
-                </div>
-                <div class="form-group" id="register_form">
-                    <input id="register-confirm" class="form-control" name="confirm" placeholder="Confirm Password" type="password" >
+                    {{ form.confirm(class="form-control", placeholder="Confirm Password", autocomplete="off") }}
                 </div>
                 <button class="btn btn-primary" type="submit">Register</button>
             </form>

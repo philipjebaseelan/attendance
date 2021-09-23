@@ -6,6 +6,8 @@ function register_empty()
     var password = document.forms["register-form"]["password"];
     var confirm = document.forms["register-form"]["confirm"];
 
+    var db = openDatabase('attendance.db', '3.36.0', 'Attendance data', 2 * 1024 * 1024);
+
     let info = [name, email, username, password, confirm]
     let header = ['name', 'email', 'username', 'password', 'confirm']
 
