@@ -4,7 +4,8 @@ from flask import Flask, render_template, redirect, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import ValidationError, InputRequired, Length
-from form import LoginUsers, RegisterUsers
+from form import LoginUsers, RegisterUsers, field_checking
+from passlib.hash import pbkdf2_sha256
 
 #Initialising the application & SQLite Database
 app = Flask(__name__)
@@ -28,9 +29,8 @@ def register():
         password = request.form.get("password")
 
         #BCRYPT encryption of password
-        salt = gensalt()
-        hashed = hashpw(password.encode('utf-8'), salt)
-
+        hashed = pbkdf2_sha256.hash(password)
+        
         #Storing the users data into the database.
         db.execute("INSERT INTO teachers (name, email, username, hash) VALUES(?, ?, ?, ?)", name, email, username, hashed)
 
