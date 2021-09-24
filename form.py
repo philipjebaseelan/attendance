@@ -38,7 +38,7 @@ class RegisterUsers(FlaskForm):
     name = StringField(validators=[InputRequired()])
     email = StringField(validators=[InputRequired()])
     username = StringField(validators=[InputRequired()])
-    password = PasswordField(validators=[InputRequired()])
+    password = PasswordField(validators=[InputRequired(), Length(min=8)])
     confirm = PasswordField(validators=[InputRequired(), EqualTo('password', message="Passwords do not match")])
 
     def validate_username(self, username):
