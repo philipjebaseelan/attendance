@@ -23,9 +23,11 @@
         <script src ="../static/script/field_validation.js"></script>
 
         <!-- OffCanvas NavBar -->
+
         <nav class="navbar navbar-light bg-light fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><img id="brandlabel" src="../static/images/brand.svg"class="d-inline-block align-text-top"></a>
+                {% if current_user.is_authenticated %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -48,10 +50,12 @@
                     </li>
                 </ul>
             </div>
+            {% endif %}
             </div>
             </div>
         </nav>
-        
+
+
         <main class="container p-5">
             {% block main %}{% endblock %}
         </main>

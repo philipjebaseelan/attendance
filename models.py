@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class Teacher(db.Model):
+class Teacher(db.Model, UserMixin):
 
 
     __tablename__ = "teacher"
