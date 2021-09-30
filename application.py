@@ -100,20 +100,26 @@ def registrar():
     return render_template("registrar.html")
 
 
-@app.route("/add_student")
+@app.route("/add_student", methods=["GET", "POST"])
 def add_student():
 
     #Ensuring User is logged in
     if not current_user.is_authenticated:
         return redirect("/login")
-
-    form_student = AddStudents()
-
-    if form_student.validate_on_submit():
-        return("/registrar")
-
     else:
-        return render_template("add-student.html", form=form_student)
+
+        form_student = AddStudents()
+        if form_student.validate_on_submit():
+            teacher=current_user.get_id()
+            name = request.form.get("name")
+            dob = request.form.get("dob")
+
+            student = Student(teacher_id=teacher, name=name, birth=dob, age=1)
+            db.session.add(student)
+            db.session.commit()
+            return redirect("/registrar")
+        else:
+            return render_template("add-student.html", form=form_student)
 
 
 

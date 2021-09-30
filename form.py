@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import ValidationError, InputRequired, Length, EqualTo
+from wtforms.fields.html5 import DateField
 from passlib.hash import pbkdf2_sha256
 from models import *
 
@@ -45,7 +46,7 @@ class RegisterUsers(FlaskForm):
 
 class AddStudents(FlaskForm):
     name = StringField(validators=[InputRequired()])
-    dob = DateField(validators=[InputRequired()])
+    dob = StringField(validators=[InputRequired()])
     parent_name = StringField(validators=[InputRequired()])
     parent_number = IntegerField(validators=[InputRequired()])
     parent_email = StringField(validators=[InputRequired()])
@@ -53,3 +54,7 @@ class AddStudents(FlaskForm):
     city = StringField(validators=[InputRequired()])
     state = SelectField(validators=[InputRequired()], choices=[(state) for state in states])
     postcode = IntegerField(validators=[InputRequired()])
+
+    def validate_state(self, state):
+        if state.data == "State":
+            raise ValidationError("Please select your state.")
