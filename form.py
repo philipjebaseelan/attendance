@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, SelectField
 from wtforms.validators import ValidationError, InputRequired, Length, EqualTo
 from passlib.hash import pbkdf2_sha256
 from models import *
 
+#Global Variables
+states = ["State", "Kuala Lumpur", "labuan", "Putrajaya", "Terrengganu", "Selangor", "Sarawak", "Sabah", "Perlis", "Perak", "Penang", "Pahang", "Negeri Sembilan", "Malacca", "Kelantan", "Kedah", "Johor"]
 
-
-
+#Global Validation
 
 def login_checking(form, field):
 
@@ -22,14 +23,12 @@ def login_checking(form, field):
 
 
 
+#Forms
 
 class LoginUsers(FlaskForm):
 
     username = StringField(validators=[InputRequired()])
     password = PasswordField(validators=[InputRequired(), login_checking])
-
-
-
 
 class RegisterUsers(FlaskForm):
     name = StringField(validators=[InputRequired()])
@@ -44,4 +43,13 @@ class RegisterUsers(FlaskForm):
         if user_object:
             raise ValidationError("Username already exist.")
 
-
+class AddStudents(FlaskForm):
+    name = StringField(validators=[InputRequired()])
+    dob = DateField(validators=[InputRequired()])
+    parent_name = StringField(validators=[InputRequired()])
+    parent_number = IntegerField(validators=[InputRequired()])
+    parent_email = StringField(validators=[InputRequired()])
+    address = StringField(validators=[InputRequired()])
+    city = StringField(validators=[InputRequired()])
+    state = SelectField(validators=[InputRequired()], choices=[(state) for state in states])
+    postcode = IntegerField(validators=[InputRequired()])

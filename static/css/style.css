@@ -42,3 +42,46 @@ main .form-control{
     padding-bottom:10px;
     border-radius:5px;
 }
+
+
+/* add-student.html */
+#add-student-name{
+    width:50%;
+    margin-left:28%;
+}
+
+#add-student-dob{
+    margin-right:70%;
+}
+
+#add-parent-name{
+    width:50%;
+    margin-left:28%;
+}
+
+#add-parent-number{
+    margin-right:70%;
+    width:80%;
+}
+
+#add-parent-email{
+    width:50%;
+    margin-left:28%;
+}
+
+#add-address{
+    width:55%;
+    margin-right:7%;
+}
+
+#add-city{
+    margin-left:14.5%;
+}
+
+#add-state{
+    width: 100%;
+}
+
+#add-postcode{
+    width:75%;
+}

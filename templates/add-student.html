@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+        <h1>Student's Details</h1>
+                <hr>
+        <form class="row g-3" action="/add_student" method="post">
+                <div class="col-md-6">
+                        {{ form.name(class="form-control", placeholder="Student's Name", autocomplete="off", id="add-student-name") }}
+                </div>
+                <div class="col-md-6">
+                        {{ form.dob(class="form-control", placeholder="Date Of Birth", autocomplete="off", id="add-student-dob") }}
+                </div>
+                <div class="col-md-6">
+                        {{ form.parent_name(class="form-control", placeholder="Parent Name", autocomplete="off", id="add-parent-name") }}
+                </div>
+                <div class="col-md-4">
+                        {{ form.parent_number(class="form-control", placeholder="Contact Number", autocomplete="off", id="add-parent-number") }}
+                </div>
+                <div class="col-md-6">
+                        {{ form.parent_email(class="form-control", placeholder="Email Adrress", autocomplete="off", id="add-parent-email") }}
+                </div>
+                <div class="col-12">
+                        {{ form.address(class="form-control", placeholder="Address", autocomplete="off", id="add-address") }}
+                </div>
+                <div class="col-6">
+                        {{ form.city(class="form-control", placeholder="City", autocomplete="off", id="add-city") }}
+                </div>
+                <div class="col-md-2">
+                        {{ form.state(class="form-control", placeholder="State", autocomplete="off", id="add-state") }}
+                </div>
+                <div class="col-md-2">
+                        {{ form.postcode(class="form-control", placeholder="Postcode", autocomplete="off", id="add-postcode") }}
+                </div>
+                <div class="col-12">
+                        <a href="/registrar" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                </div>
+        </form>
+        <hr>
+
+
+{% endblock %}

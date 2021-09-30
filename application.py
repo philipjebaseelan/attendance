@@ -44,7 +44,7 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        #BCRYPT encryption of password
+        #Passlib encryption of password
         hashed = pbkdf2_sha256.hash(password)
 
         #Storing the users data into the database.
@@ -84,8 +84,38 @@ def logout():
 @app.route("/")
 def index():
 
+    #Ensuring User is logged in
     if not current_user.is_authenticated:
         return redirect("/login")
 
-
     return render_template("layout.html")
+
+@app.route("/registrar")
+def registrar():
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    return render_template("registrar.html")
+
+
+@app.route("/add_student")
+def add_student():
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    form_student = AddStudents()
+
+    if form_student.validate_on_submit():
+        return("/registrar")
+
+    else:
+        return render_template("add-student.html", form=form_student)
+
+
+
+
+
