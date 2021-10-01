@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import ValidationError, InputRequired, Length
 from passlib.hash import pbkdf2_sha256
+from datetime import date, datetime
 from form import *
 from models import *
 
@@ -109,15 +110,27 @@ def add_student():
     else:
 
         form_student = AddStudents()
+        today = date.today()
+
         if form_student.validate_on_submit():
+
             teacher=current_user.get_id()
+
+
             name = request.form.get("name")
             dob = request.form.get("dob")
 
-            student = Student(teacher_id=teacher, name=name, birth=dob, age=1)
+
+            today = datetime.today()
+            birthdate = datetime.strptime(dob, '%Y-%m-%d')
+
+            student = Student(teacher_id=teacher, name=name, birth=dob, age=today.year - birthdate.year)
             db.session.add(student)
             db.session.commit()
+
+
             return redirect("/registrar")
+
         else:
             return render_template("add-student.html", form=form_student)
 

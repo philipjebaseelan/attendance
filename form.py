@@ -26,11 +26,13 @@ def login_checking(form, field):
 
 #Forms
 
+#login Form
 class LoginUsers(FlaskForm):
 
     username = StringField(validators=[InputRequired()])
     password = PasswordField(validators=[InputRequired(), login_checking])
 
+#Registration Form
 class RegisterUsers(FlaskForm):
     name = StringField(validators=[InputRequired()])
     email = StringField(validators=[InputRequired()])
@@ -44,9 +46,10 @@ class RegisterUsers(FlaskForm):
         if user_object:
             raise ValidationError("Username already exist.")
 
+#Add Student Form
 class AddStudents(FlaskForm):
     name = StringField(validators=[InputRequired()])
-    dob = StringField(validators=[InputRequired()])
+    dob = DateField(validators=[InputRequired()])
     parent_name = StringField(validators=[InputRequired()])
     parent_number = IntegerField(validators=[InputRequired()])
     parent_email = StringField(validators=[InputRequired()])
