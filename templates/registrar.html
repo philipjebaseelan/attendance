@@ -4,8 +4,30 @@
 
         <h1>Student Registrar</h1>
         <hr>
-        <a class="btn btn-secondary" href="/add_student" role="button">Add Student</a>
-
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-secondary" href="/add_student" role="button">Add Student</a>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+                  <thead>
+                          <tr>
+                                  {% for header in headers %}
+                                  <th> {{ header }} </th>
+                                  {% endfor %}
+                          </tr>
+                  </thead>
+                  <tbody>
+                          {% for student in students %}
+                          <tr>
+                                  <td> {{student.name}} </td>
+                                  <td> {{student.age }} </td>
+                                  <td> {{student.parent}} </td>
+                                  <td> {{student.number}} </td>
+                          </tr>
+                          {% endfor %}
+                  </tbody>
+          </table>
+        </div>
 
 
 

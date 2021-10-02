@@ -94,11 +94,15 @@ def index():
 @app.route("/registrar")
 def registrar():
 
+    TABLE_HEADERS=["Name", "Age", "Parent Name", "Contact Number"]
+
     #Ensuring User is logged in
     if not current_user.is_authenticated:
         return redirect("/login")
-
-    return render_template("registrar.html")
+    else:
+        teacher=current_user.get_id()
+        students = Student.query.filter_by(teacher_id=teacher).all()
+        return render_template("registrar.html", headers=TABLE_HEADERS, students=students)
 
 
 @app.route("/add_student", methods=["GET", "POST"])
@@ -116,18 +120,22 @@ def add_student():
 
             teacher=current_user.get_id()
 
-
             name = request.form.get("name")
             dob = request.form.get("dob")
-
+            parent = request.form.get("parent_name")
+            number = request.form.get("parent_number")
+            email = request.form.get("parent_email")
+            address = request.form.get("address")
+            city = request.form.get("city")
+            state = request.form.get("state")
+            postcode = request.form.get("postcode")
 
             today = datetime.today()
             birthdate = datetime.strptime(dob, '%Y-%m-%d')
 
-            student = Student(teacher_id=teacher, name=name, birth=dob, age=today.year - birthdate.year)
+            student = Student(teacher_id=teacher, name=name, birth=dob, age=today.year - birthdate.year, parent=parent, number=number, email=email, address=address, city=city, state=state, postcode=postcode)
             db.session.add(student)
             db.session.commit()
-
 
             return redirect("/registrar")
 
