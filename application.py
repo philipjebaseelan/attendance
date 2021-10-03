@@ -100,8 +100,8 @@ def registrar():
     if not current_user.is_authenticated:
         return redirect("/login")
     else:
-        teacher=current_user.get_id()
-        students = Student.query.filter_by(teacher_id=teacher).all()
+        teacher = current_user.get_id()
+        students = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
         return render_template("registrar.html", headers=TABLE_HEADERS, students=students)
 
 
