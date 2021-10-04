@@ -85,3 +85,19 @@ main .form-control{
 #add-postcode{
     width:75%;
 }
+
+/* detail_student */
+.col-4{
+    flex: 0 0 auto;
+    width: 97%;
+}
+
+.col-6{
+    flex: 0 0 auto;
+    width: 96%;
+}
+
+.col-12{
+    flex: 0 0 auto;
+    width: 96%;
+}

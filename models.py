@@ -31,4 +31,3 @@ class Student(db.Model):
     city = db.Column(db.String(), nullable=False)
     state = db.Column(db.String(), nullable=False)
     postcode = db.Column(db.Integer, nullable=False)
-

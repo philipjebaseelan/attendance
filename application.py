@@ -142,7 +142,35 @@ def add_student():
         else:
             return render_template("add-student.html", form=form_student)
 
+@app.route("/detail_student/<string:id>")
+def student(id):
 
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+
+        teacher = current_user.get_id()
+
+        student_object = Student.query.filter_by(id=id, teacher_id=teacher)
+
+        return render_template("detail-student.html", students = student_object)
+
+@app.route("/delete_student/<string:id>")
+def delete(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+        teacher = current_user.get_id()
+        student = db.session.query(Student).filter(id==id).first()
+
+        db.session.delete(student)
+        db.session.commit()
+
+
+        return redirect("/registrar")
 
 
 
