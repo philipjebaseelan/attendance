@@ -5,38 +5,38 @@
     {% for student in students %}
         <h1>{{student.name}}</h1>
         <hr>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 <b>Student's Name:</b> {{student.name}}
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 <b>Date of Birth:</b> {{student.birth}}
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 <b>Age:</b> {{student.age}}
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 <b>Parent's Name:</b> {{student.parent}}
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 <b>Contact Number:</b> {{student.number}}
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 <b>Email Address:</b> {{student.email}}
             </div>
-            <div class="col-6">
+            <div class="col-6" id="detail-col6">
                 <b>Address:</b> {{student.address}},
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 {{student.city}},
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 {{student.state}},
             </div>
-            <div class="col-4">
+            <div class="col-4" id="detail-col4">
                 {{student.postcode}}.
             </div>
             <hr>
-            <div class="col-12">
+            <div class="col-12" id="detail-col12">
                 <a href="/registrar" class="btn btn-primary">Back</a>
                 <a href="/delete_student/{{student.id}}" class="btn btn-Danger">Remove Student</a>
             </div>

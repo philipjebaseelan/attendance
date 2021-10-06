@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block main %}
+        <h1>{{classes.name}}</h1>
+        <h5> Age Group: {{classes.lowest_age}} - {{classes.highest_age}} </h5>
+        <hr>
+        <div class="d-grid gap-2 d-md-block">
+          <a class="btn btn-danger" id="detail-class-back" href="/class" type="button">Back</a>
+          <a class="btn btn-success" id="detail-class-attendance" href="#" role="button">Take Attendance</a>
+          <a class="btn btn-secondary" id="detail-class-add" href="/add_student_class/{{classes.id}}" role="button">Add Student</a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+                  <thead>
+                          <tr>
+                                  {% for header in headers %}
+                                  <th> {{ header }} </th>
+                                  {% endfor %}
+                          </tr>
+                          <tbody>
+                          {% for student in students %}
+                          <tr>
+                                  <td>{{student.name}}</td>
+                                  <td> {{student.age }} </td>
+                                  <td> {{student.parent}} </td>
+                                  <td> {{student.number}} </td>
+                          </tr>
+                          {% endfor %}
+                  </tbody>
+                  </thead>
+
+          </table>
+        </div>
+{% endblock %}

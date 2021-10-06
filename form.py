@@ -21,8 +21,13 @@ def login_checking(form, field):
     elif not pbkdf2_sha256.verify(entered_password, user_object.password):
         raise ValidationError("Invalid Username or Password.")
 
+def class_age_checking(form, field):
 
+    lowest = form.lage.data
+    highest = field.data
 
+    if lowest >= highest:
+        raise ValidationError("Incorrect Age Group Format")
 
 #Forms
 
@@ -61,3 +66,15 @@ class AddStudents(FlaskForm):
     def validate_state(self, state):
         if state.data == "State":
             raise ValidationError("Please select your state.")
+
+#Add Class Form
+class AddClass(FlaskForm):
+    name = StringField(validators=[InputRequired()])
+    lage = IntegerField(validators=[InputRequired()])
+    hage = IntegerField(validators=[InputRequired(), class_age_checking])
+
+    def validate_name(self, name):
+        class_object = Class.query.filter_by(name=name.data).first()
+
+        if class_object:
+            raise ValidationError("Username already exist.")

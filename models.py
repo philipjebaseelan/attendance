@@ -12,12 +12,14 @@ class Teacher(db.Model, UserMixin):
     username = db.Column(db.String(), unique=True, nullable=False)
     password = db.Column(db.String(), nullable=False)
     students = db.relationship("Student", backref="teacher")
+    classes = db.relationship("Class", backref="classes")
 
 class Student(db.Model):
 
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey("teacher.id"))
+    class_id = db.Column(db.Integer, nullable=True)
     name = db.Column(db.String(), nullable=False)
     birth = db.Column(db.String(),nullable=False)
     age = db.Column(db.Integer(), nullable=False)
@@ -31,3 +33,15 @@ class Student(db.Model):
     city = db.Column(db.String(), nullable=False)
     state = db.Column(db.String(), nullable=False)
     postcode = db.Column(db.Integer, nullable=False)
+
+class Class(db.Model):
+
+    __tablename__ = "class"
+    id = db.Column(db.Integer, primary_key=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey("teacher.id"))
+    name = db.Column(db.String(), nullable=False)
+    lowest_age = db.Column(db.Integer, nullable=False)
+    highest_age = db.Column(db.Integer, nullable=False)
+    count = db.Column(db.Integer)
+
+

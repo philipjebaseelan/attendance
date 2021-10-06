@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+    <h1>Add Student</h1>
+    <hr>
+    <form action="/added_student_class/{{ident}}" method="post">
+        <div class="form-group">
+            <select name="students">
+                <option disabled selected value="Student">Student</option>
+                {% for student in students %}
+                <option>{{ student.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-12" id="detail-col12">
+                <a class="btn btn-danger" href="/detail_class/{{ident}}" >Back</a>
+                <button class="btn btn-primary" type="submit">Add Student</button>
+            </div>
+    </form>
+{% endblock %}

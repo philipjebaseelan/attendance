@@ -87,17 +87,34 @@ main .form-control{
 }
 
 /* detail_student */
-.col-4{
+#detail-col4{
     flex: 0 0 auto;
     width: 97%;
 }
 
-.col-6{
+#detail-col6{
     flex: 0 0 auto;
     width: 96%;
 }
 
-.col-12{
+#detail-col12{
     flex: 0 0 auto;
     width: 96%;
 }
+
+
+/* add-class.html */
+
+#add-class-div{
+    margin-left :0px;
+
+}
+
+#add-class-lage{
+    width: 66px;
+}
+
+#add-class-hage{
+    width: 66px;
+}
+

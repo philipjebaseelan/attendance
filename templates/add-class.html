@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+        {% for field, errors in form.errors.items() %}
+                <small class="form-text text-muted ">
+                    {{ ', '.join(errors) }}
+                </small>
+        {% endfor %}
+
+        <h1>Class Details</h1>
+        <hr>
+        <form class="row g-3" action="/add_class" method="post">
+                {{ form.csrf_token() }}
+                <div class="col-md-12" >
+                        {{ form.name(class="form-control", placeholder="Class Name", autocomplete="off", id="add-class-name") }}
+                </div>
+                <div class="col-md-12" id="add-class-div">
+                    <label>Age Group:</label>
+                        {{ form.lage(class="form-control",autocomplete="off", id="add-class-lage", type="number", min="0") }} - {{ form.hage(class="form-control", autocomplete="off", id="add-class-hage", type="number",min="0") }}
+                </div>
+                <div class="col-12">
+                        <a href="/class" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add Class</button>
+                </div>
+                <hr>
+        </form>
+
+
+
+{% endblock %}

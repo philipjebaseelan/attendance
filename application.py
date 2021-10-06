@@ -101,8 +101,8 @@ def registrar():
         return redirect("/login")
     else:
         teacher = current_user.get_id()
-        students = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
-        return render_template("registrar.html", headers=TABLE_HEADERS, students=students)
+        student_object = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
+        return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object)
 
 
 @app.route("/add_student", methods=["GET", "POST"])
@@ -157,7 +157,7 @@ def student(id):
         return render_template("detail-student.html", students = student_object)
 
 @app.route("/delete_student/<string:id>")
-def delete(id):
+def delete_student(id):
 
     #Ensuring User is logged in
     if not current_user.is_authenticated:
@@ -173,4 +173,105 @@ def delete(id):
         return redirect("/registrar")
 
 
+
+@app.route("/class")
+def classes():
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+
+        TABLE_HEADERS=["Class Name", "Age Group", "No. of Students"]
+
+
+
+        teacher = current_user.get_id()
+        class_object = Class.query.filter_by(teacher_id = teacher).order_by(Class.id.desc()).all()
+
+
+
+
+        return render_template("class.html", headers=TABLE_HEADERS, classes=class_object)
+
+
+
+@app.route("/add_class", methods=["GET", "POST"])
+def add_class():
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+
+        form_class = AddClass()
+
+        if form_class.validate_on_submit():
+
+            teacher = current_user.get_id()
+            name = request.form.get("name")
+            lage = request.form.get("lage")
+            hage = request.form.get("hage")
+
+            class_object = Class(teacher_id=teacher, name=name, lowest_age=lage, highest_age=hage)
+            db.session.add(class_object)
+            db.session.commit()
+            return redirect("/class")
+
+        else:
+            return render_template("add-class.html", form=form_class)
+
+
+@app.route("/detail_class/<string:id>")
+def detail_class(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+
+        TABLE_HEADERS=["Name", "Age", "Parent Name", "Contact Number", "Attendance"]
+        teacher = current_user.get_id()
+        class_object = Class.query.filter_by(id = id).first()
+
+        students = Student.query.filter_by(class_id=id, teacher_id=teacher)
+
+        return render_template("detail-class.html", classes=class_object, headers=TABLE_HEADERS, students=students)
+
+
+@app.route("/add_student_class/<string:id>")
+def add_student_class(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+            val = None
+            null_students = Student.query.filter_by(class_id = None)
+            return render_template("add-student-class.html", students=null_students, ident=id)
+
+@app.route("/added_student_class/<string:id>", methods=["POST"])
+def added_student_class(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+        name = request.form.get("students")
+        teacher = current_user.get_id()
+        class_id = id
+
+        student = Student.query.filter_by( name=name, teacher_id=teacher).first()
+        class_inc = Class.query.filter_by(id=class_id, teacher_id=teacher).first()
+        student.class_id = class_id
+        class_inc.count += 1
+        db.session.merge(student)
+        db.session.merge(class_inc)
+        db.session.commit()
+
+        return redirect("/detail_class/" +id)
 
