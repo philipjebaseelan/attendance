@@ -1,12 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField
 from wtforms.validators import ValidationError, InputRequired, Length, EqualTo
 from wtforms.fields.html5 import DateField
 from passlib.hash import pbkdf2_sha256
 from models import *
-
-#Global Variables
-states = ["State", "Kuala Lumpur", "labuan", "Putrajaya", "Terrengganu", "Selangor", "Sarawak", "Sabah", "Perlis", "Perak", "Penang", "Pahang", "Negeri Sembilan", "Malacca", "Kelantan", "Kedah", "Johor"]
 
 #Global Validation
 
@@ -58,9 +55,11 @@ class AddStudents(FlaskForm):
     parent_name = StringField(validators=[InputRequired()])
     parent_number = IntegerField(validators=[InputRequired()])
     parent_email = StringField(validators=[InputRequired()])
+    parent2_name = StringField(validators=[InputRequired()])
+    parent2_number = IntegerField(validators=[InputRequired()])
+    parent2_email = StringField(validators=[InputRequired()])
     address = StringField(validators=[InputRequired()])
     city = StringField(validators=[InputRequired()])
-    state = SelectField(validators=[InputRequired()], choices=[(state) for state in states])
     postcode = IntegerField(validators=[InputRequired()])
 
     def validate_state(self, state):

@@ -44,4 +44,3 @@ class Class(db.Model):
     highest_age = db.Column(db.Integer, nullable=False)
     count = db.Column(db.Integer)
 
-

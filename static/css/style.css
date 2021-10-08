@@ -7,6 +7,13 @@
     color: #ff0000!important;
 }
 
+.btn .btn-success{
+    color:#FFFFFF;
+    background-color: #33FF99;
+    border-color: #1AFF;
+}
+
+
 /* register.html */
 main
 {
@@ -32,6 +39,12 @@ main .form-control{
     border:2px solid #e74c3c;
 }
 
+.cole-md-6{
+    width:556px;
+    height:70px;
+}
+
+
 #register_form{
     padding-bottom:10px;
     border-radius:5px;
@@ -45,45 +58,89 @@ main .form-control{
 
 
 /* add-student.html */
+
+
+#label-add-student-name{
+    margin-left:9%;
+}
+
 #add-student-name{
     width:50%;
-    margin-left:28%;
+    margin-left:36%;
+}
+
+#label-add-student-dob{
+    margin-right:60%;
 }
 
 #add-student-dob{
-    margin-right:70%;
+    margin-right:52%;
 }
 
-#add-parent-name{
+#label-add-student-fname{
+    margin-left:7%;
+}
+
+#add-student-fname{
     width:50%;
-    margin-left:28%;
+    margin-left:36%;
 }
 
-#add-parent-number{
-    margin-right:70%;
-    width:80%;
+#label-add-student-fnumber{
+    margin-right:45%;
 }
 
-#add-parent-email{
+#add-student-fnumber{
+    margin-right:21%;
+    width:60%;
+}
+
+#label-add-student-femail{
+    margin-right:47.5%;
+}
+
+#add-student-femail{
     width:50%;
-    margin-left:28%;
+    margin-right:7.75%;
 }
 
-#add-address{
+#label-add-student-gender{
+    margin-left:-36.5%;
+}
+
+#label-add-student-address{
+    margin-right:52%;
+}
+
+#add-student-address{
     width:55%;
-    margin-right:7%;
+    margin-right:2.7%;
 }
 
-#add-city{
-    margin-left:14.5%;
+#label-add-student-city{
+    margin-right:8%;
 }
 
-#add-state{
+#add-student-city{
+    width:50%;
+    margin-left:36%;
+}
+
+#label-add-student-state{
+    margin-right:72%;
+}
+
+#add-student-state{
     width: 100%;
 }
 
-#add-postcode{
-    width:75%;
+#label-add-student-postcode{
+    margin-right:37%;
+}
+
+#add-student-postcode{
+    width:68%;
+    margin-right: 15%;
 }
 
 /* detail_student */

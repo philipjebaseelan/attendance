@@ -20,6 +20,11 @@
                           {% for student in students %}
                           <tr>
                                   <td><a href="/detail_student/{{student.id}}"> {{student.name}} </a></td>
+                                  {% if student.class_id == None %}
+                                  <td>Unassigned</td>
+                                  {% else %}
+                                  <td>{{student.class_id}}</td>
+                                  {% endif %}
                                   <td> {{student.age }} </td>
                                   <td> {{student.parent}} </td>
                                   <td> {{student.number}} </td>

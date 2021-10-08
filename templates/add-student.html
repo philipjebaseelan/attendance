@@ -13,40 +13,86 @@
 
         <form class="row g-3" action="/add_student" method="post">
                 {{ form.csrf_token() }}
+
+                <!-- Student's Detials  -->
                 <div class="col-md-6">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-name">Student's Name:</label>
                         {{ form.name(class="form-control", placeholder="Student's Name", autocomplete="off", id="add-student-name") }}
                 </div>
                 <div class="col-md-6">
-                        {{ form.dob(class="form-control", label="Date Of Birth", autocomplete="off", id="add-student-dob", type="date") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-dob">Student's Birth date:</label>
+                        {{ form.dob(class="form-control", autocomplete="off", id="add-student-dob" )}}
+                </div>
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-gender">Gender:</label>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="gender" id="gender" value="option1" checked>
+                          <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                           <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="option2">
+                           <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
                 </div>
 
+                <!-- Father's Details -->
                 <div class="col-md-6">
-                        {{ form.parent_name(class="form-control", placeholder="Parent Name", autocomplete="off", id="add-parent-name") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fname" >Father's Name:</label>
+                        {{ form.parent_name(class="form-control", placeholder="Father's Name", autocomplete="off", id="add-student-fname") }}
                 </div>
                 <div class="col-md-4">
-                        {{ form.parent_number(class="form-control", placeholder="Contact Number", autocomplete="off", id="add-parent-number") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fnumber">Father's Number:</label>
+                        {{ form.parent_number(class="form-control", placeholder="Contact Number", autocomplete="off", id="add-student-fnumber") }}
                 </div>
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-femail">Father's Email:</label>
+                        {{ form.parent_email(class="form-control", placeholder="Email Adrress", autocomplete="off", id="add-student-femail", type="email") }}
+                </div>
+
+                <!-- Mother's Detials -->
                 <div class="col-md-6">
-                        {{ form.parent_email(class="form-control", placeholder="Email Adrress", autocomplete="off", id="add-parent-email", type="email") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fname" >Mother's Name:</label>
+                        {{ form.parent2_name(class="form-control", placeholder="Mother's Name", autocomplete="off", id="add-student-fname") }}
                 </div>
+                <div class="col-md-4">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fnumber">Mother's Number:</label>
+                        {{ form.parent2_number(class="form-control", placeholder="Contact Number", autocomplete="off", id="add-student-fnumber") }}
+                </div>
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-femail">Mother's Email:</label>
+                        {{ form.parent2_email(class="form-control", placeholder="Email Adrress", autocomplete="off", id="add-student-femail", type="email") }}
+                </div>
+
+                <!-- Address -->
                 <div class="col-12">
-                        {{ form.address(class="form-control", placeholder="Address", autocomplete="off", id="add-address") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-address">Address:</label>
+                        {{ form.address(class="form-control", placeholder="Address", autocomplete="off", id="add-student-address") }}
                 </div>
                 <div class="col-6">
-                        {{ form.city(class="form-control", placeholder="City", autocomplete="off", id="add-city") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-city">City:</label>
+                        {{ form.city(class="form-control", placeholder="City", autocomplete="off", id="add-student-city") }}
                 </div>
                 <div class="col-md-2">
-                        {{ form.state(class="form-control", placeholder="State", autocomplete="off", id="add-state") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-state">State:</label>
+                        <select class="form-select" aria-label="Default select example" name="state">
+                                  <option disabled selected value="State">State</option>
+                                  {% for state in states %}
+                                  <option>{{state}}</option>
+                                  {% endfor %}
+                        </select>
                 </div>
                 <div class="col-md-2">
-                        {{ form.postcode(class="form-control", placeholder="Postcode", autocomplete="off", id="add-postcode") }}
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-postcode">Postcode:</label>
+                        {{ form.postcode(class="form-control", placeholder="Postcode", autocomplete="off", id="add-student-postcode") }}
                 </div>
+
+                <!-- Butoons -->
                 <div class="col-12">
                         <a href="/registrar" class="btn btn-danger">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Add Student</button>
+                        <button type="submit" class="btn btn-success">Add Student</button>
                 </div>
+
         </form>
         <hr>
-
 
 {% endblock %}

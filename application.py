@@ -31,6 +31,11 @@ login.init_app(app)
 def load_user(id):
     return Teacher.query.get(id)
 
+#Global Variables
+states = ["Kuala Lumpur", "labuan", "Putrajaya", "Terrengganu", "Selangor", "Sarawak", "Sabah", "Perlis", "Perak", "Penang", "Pahang", "Negeri Sembilan", "Malacca", "Kelantan", "Kedah", "Johor"]
+
+
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -94,7 +99,7 @@ def index():
 @app.route("/registrar")
 def registrar():
 
-    TABLE_HEADERS=["Name", "Age", "Parent Name", "Contact Number"]
+    TABLE_HEADERS=["Name","Class", "Age", "Parent Name", "Contact Number"]
 
     #Ensuring User is logged in
     if not current_user.is_authenticated:
@@ -122,6 +127,7 @@ def add_student():
 
             name = request.form.get("name")
             dob = request.form.get("dob")
+            option = request.form.get("gender")
             parent = request.form.get("parent_name")
             number = request.form.get("parent_number")
             email = request.form.get("parent_email")
@@ -130,17 +136,30 @@ def add_student():
             state = request.form.get("state")
             postcode = request.form.get("postcode")
 
+
+            #Calculating the age
             today = datetime.today()
             birthdate = datetime.strptime(dob, '%Y-%m-%d')
+            age = today.year - birthdate.year
 
-            student = Student(teacher_id=teacher, name=name, birth=dob, age=today.year - birthdate.year, parent=parent, number=number, email=email, address=address, city=city, state=state, postcode=postcode)
+            #Storing the gender
+            if option == "option1":
+                gender = "Male"
+            else:
+                gender = "Female"
+
+
+
+            student = Student(teacher_id=teacher, name=name, birth=dob, age=age, parent=parent, number=number, email=email, address=address, city=city, state=state, postcode=postcode)
             db.session.add(student)
             db.session.commit()
 
+            print(gender)
             return redirect("/registrar")
 
         else:
-            return render_template("add-student.html", form=form_student)
+            return render_template("add-student.html", form=form_student, states=states)
+
 
 @app.route("/detail_student/<string:id>")
 def student(id):
