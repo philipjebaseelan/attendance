@@ -15,6 +15,17 @@
                 <b>Age:</b> {{student.age}}
             </div>
             <div class="col-4" id="detail-col4">
+                 {% if student.class_id == 0 %}
+                     <b>Class:</b> Unassigned
+                 {% else %}
+                    {% for class in classes %}
+                        {% if class.id == student.class_id %}
+                            <b>Class:</b> {{class.name}}
+                        {% endif %}
+                    {% endfor %}
+                 {% endif %}
+            </div>
+            <div class="col-4" id="detail-col4">
                 <b>Parent's Name:</b> {{student.parent}}
             </div>
             <div class="col-4" id="detail-col4">
@@ -38,7 +49,7 @@
             <hr>
             <div class="col-12" id="detail-col12">
                 <a href="/registrar" class="btn btn-primary">Back</a>
-                <a href="/delete_student/{{student.id}}" class="btn btn-Danger">Remove Student</a>
+                <a href="/delete_student/{{student.id}}" class="btn btn-danger">Remove Student</a>
             </div>
     {% endfor %}
 

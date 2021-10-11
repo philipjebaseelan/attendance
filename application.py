@@ -99,7 +99,7 @@ def index():
 @app.route("/registrar")
 def registrar():
 
-    TABLE_HEADERS=["Name","Class", "Age", "Parent Name", "Contact Number"]
+    TABLE_HEADERS=["No.", "Name", "Class", "Age", "Parent Name", "Contact Number"]
 
     #Ensuring User is logged in
     if not current_user.is_authenticated:
@@ -107,7 +107,8 @@ def registrar():
     else:
         teacher = current_user.get_id()
         student_object = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
-        return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object)
+        class_object = Class.query.all()
+        return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object, classes=class_object)
 
 
 @app.route("/add_student", methods=["GET", "POST"])
@@ -172,8 +173,10 @@ def student(id):
         teacher = current_user.get_id()
 
         student_object = Student.query.filter_by(id=id, teacher_id=teacher)
+        class_object = Class.query.all()
 
-        return render_template("detail-student.html", students = student_object)
+
+        return render_template("detail-student.html", students = student_object, classes=class_object)
 
 @app.route("/delete_student/<string:id>")
 def delete_student(id):
@@ -183,10 +186,18 @@ def delete_student(id):
         return redirect("/login")
     else:
         teacher = current_user.get_id()
-        student = db.session.query(Student).filter(id==id).first()
+        student = db.session.query(Student).filter_by(id=id).first()
+        class_id = student.class_id
+
+        if class_id != 0:
+            class_object = db.session.query(Class).filter_by(id=class_id).first()
+            class_object.count -= 1
+            db.session.merge(class_object)
+            db.session.flush
 
         db.session.delete(student)
         db.session.commit()
+
 
 
         return redirect("/registrar")
@@ -284,7 +295,7 @@ def added_student_class(id):
         teacher = current_user.get_id()
         class_id = id
 
-        student = Student.query.filter_by( name=name, teacher_id=teacher).first()
+        student = Student.query.filter_by( name=name, teacher_id=teacher, class_id=None).first()
         class_inc = Class.query.filter_by(id=class_id, teacher_id=teacher).first()
         student.class_id = class_id
         class_inc.count += 1

@@ -5,25 +5,30 @@
         <h1>Student Registrar</h1>
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a class="btn btn-secondary" href="/add_student" role="button">Add Student</a>
+                <a class="btn btn-secondary" href="/add_student" role="button">Enroll Student</a>
         </div>
         <div class="table-responsive">
-          <table class="table table-striped table-hover">
+          <table class="table table-hover">
                   <thead>
                           <tr>
                                   {% for header in headers %}
-                                  <th> {{ header }} </th>
+                                  <th id="header"> {{ header }} </th>
                                   {% endfor %}
                           </tr>
                   </thead>
                   <tbody>
                           {% for student in students %}
                           <tr>
-                                  <td><a href="/detail_student/{{student.id}}"> {{student.name}} </a></td>
-                                  {% if student.class_id == None %}
+                                <td class="counterCell"></td>
+                                <td><a href="/detail_student/{{student.id}}"> {{student.name}} </a></td>
+                                  {% if student.class_id == 0 %}
                                   <td>Unassigned</td>
                                   {% else %}
-                                  <td>{{student.class_id}}</td>
+                                      {% for class in classes %}
+                                          {% if class.id == student.class_id %}
+                                              <td>{{class.name}}</td>
+                                           {% endif %}
+                                      {% endfor %}
                                   {% endif %}
                                   <td> {{student.age }} </td>
                                   <td> {{student.parent}} </td>
@@ -33,7 +38,7 @@
                   </tbody>
           </table>
         </div>
-
+        <hr>
 
 
 

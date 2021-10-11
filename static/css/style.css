@@ -7,12 +7,44 @@
     color: #ff0000!important;
 }
 
-.btn .btn-success{
+.btn-success{
     color:#FFFFFF;
-    background-color: #33FF99;
-    border-color: #1AFF;
+    background-color: #00b359;
+    border-color: #00b359;
 }
 
+.btn-secondary{
+    color:#FFFFFF;
+    background-color:#159d9d;
+    border-color:#159d9d;
+}
+
+.btn-secondary:hover{
+    color:#FFFFFF;
+    background-color: #0f7070;
+    border-color: #0f7070;
+}
+
+table {
+    counter-reset: tableCount;
+}
+
+.counterCell:before {
+    content: counter(tableCount);
+    counter-increment: tableCount;
+}
+
+tr:nth-child(even) {
+  background-color:#d2f9ed;
+}
+
+tr:nth-child(odd) {
+  background-color:#e9fcf6;
+}
+
+#header{
+    background-color:white;
+}
 
 /* register.html */
 main
@@ -143,10 +175,12 @@ main .form-control{
     margin-right: 15%;
 }
 
+
+
 /* detail_student */
 #detail-col4{
     flex: 0 0 auto;
-    width: 97%;
+    width: 99%;
 }
 
 #detail-col6{
@@ -156,7 +190,7 @@ main .form-control{
 
 #detail-col12{
     flex: 0 0 auto;
-    width: 96%;
+    width: 100%;
 }
 
 

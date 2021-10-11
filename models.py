@@ -19,7 +19,7 @@ class Student(db.Model):
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey("teacher.id"))
-    class_id = db.Column(db.Integer, nullable=True)
+    class_id = db.Column(db.Integer, nullable=True, default=0)
     name = db.Column(db.String(), nullable=False)
     birth = db.Column(db.String(),nullable=False)
     age = db.Column(db.Integer(), nullable=False)
