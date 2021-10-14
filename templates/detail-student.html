@@ -25,15 +25,46 @@
                     {% endfor %}
                  {% endif %}
             </div>
-            <div class="col-4" id="detail-col4">
-                <b>Parent's Name:</b> {{student.parent}}
-            </div>
-            <div class="col-4" id="detail-col4">
-                <b>Contact Number:</b> {{student.number}}
-            </div>
-            <div class="col-4" id="detail-col4">
-                <b>Email Address:</b> {{student.email}}
-            </div>
+            {% if student.parent == None %}
+                <div class="col-4" id="detail-col4">
+                    <b>Mother's Name:</b> {{student.parent2}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Mother's Contact Number:</b> {{student.number2}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Mother's Email Address:</b> {{student.email2}}
+                </div>
+            {% elif student.parent2 == None %}
+                <div class="col-4" id="detail-col4">
+                    <b>Father's Name:</b> {{student.parent}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Father's Contact Number:</b> {{student.number}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Father's Email Address:</b> {{student.email}}
+                </div>
+            {% else %}
+                <div class="col-4" id="detail-col4">
+                    <b>Father's Name:</b> {{student.parent}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Father's Contact Number:</b> {{student.number}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Father's Email Address:</b> {{student.email}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Mother's Name:</b> {{student.parent2}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Mother's Contact Number:</b> {{student.number2}}
+                </div>
+                <div class="col-4" id="detail-col4">
+                    <b>Mother's Email Address:</b> {{student.email2}}
+                </div>
+            {% endif %}
             <div class="col-6" id="detail-col6">
                 <b>Address:</b> {{student.address}},
             </div>

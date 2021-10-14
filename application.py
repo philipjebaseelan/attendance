@@ -129,9 +129,12 @@ def add_student():
             name = request.form.get("name")
             dob = request.form.get("dob")
             option = request.form.get("gender")
-            parent = request.form.get("parent_name")
-            number = request.form.get("parent_number")
-            email = request.form.get("parent_email")
+            father = request.form.get("parent_name")
+            fnumber = request.form.get("parent_number")
+            femail = request.form.get("parent_email")
+            mother = request.form.get("parent2_name")
+            mnumber = request.form.get("parent2_number")
+            memail = request.form.get("parent2_email")
             address = request.form.get("address")
             city = request.form.get("city")
             state = request.form.get("state")
@@ -151,11 +154,10 @@ def add_student():
 
 
 
-            student = Student(teacher_id=teacher, name=name, birth=dob, age=age, parent=parent, number=number, email=email, address=address, city=city, state=state, postcode=postcode)
+            student = Student(teacher_id=teacher, name=name, birth=dob, age=age, parent=father, parent2=mother, number=fnumber, number2=mnumber, email=femail, email2=memail, address=address, city=city, state=state, postcode=postcode)
             db.session.add(student)
             db.session.commit()
 
-            print(gender)
             return redirect("/registrar")
 
         else:
@@ -213,16 +215,9 @@ def classes():
 
     else:
 
-        TABLE_HEADERS=["Class Name", "Age Group", "No. of Students"]
-
-
-
+        TABLE_HEADERS=["No.", "Class Name", "Age Group", "No. of Students"]
         teacher = current_user.get_id()
         class_object = Class.query.filter_by(teacher_id = teacher).order_by(Class.id.desc()).all()
-
-
-
-
         return render_template("class.html", headers=TABLE_HEADERS, classes=class_object)
 
 
@@ -263,7 +258,7 @@ def detail_class(id):
 
     else:
 
-        TABLE_HEADERS=["Name", "Age", "Parent Name", "Contact Number", "Attendance"]
+        TABLE_HEADERS=["No.", "Name", "Age", "Parent Name", "Contact Number", "Attendance"]
         teacher = current_user.get_id()
         class_object = Class.query.filter_by(id = id).first()
 
@@ -280,7 +275,7 @@ def add_student_class(id):
         return redirect("/login")
     else:
             val = None
-            null_students = Student.query.filter_by(class_id = None)
+            null_students = Student.query.filter_by(class_id = 0)
             return render_template("add-student-class.html", students=null_students, ident=id)
 
 @app.route("/added_student_class/<string:id>", methods=["POST"])
@@ -295,13 +290,62 @@ def added_student_class(id):
         teacher = current_user.get_id()
         class_id = id
 
-        student = Student.query.filter_by( name=name, teacher_id=teacher, class_id=None).first()
+        student = Student.query.filter_by( name=name, teacher_id=teacher, class_id=0).first()
         class_inc = Class.query.filter_by(id=class_id, teacher_id=teacher).first()
         student.class_id = class_id
-        class_inc.count += 1
+        class_inc.student_count += 1
         db.session.merge(student)
         db.session.merge(class_inc)
         db.session.commit()
 
         return redirect("/detail_class/" +id)
 
+@app.route("/take-attendance/<string:id>")
+def take_attendance(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+
+        form_attend = TakeAttendance()
+        TABLE_HEADERS = ["No.", "Student Name", "Attendance"]
+        students = db.session.query(Student).filter_by(class_id=id)
+        return render_template("take-attendance.html", ident=id, form=form_attend, headers=TABLE_HEADERS, students=students)
+
+
+
+@app.route("/taken-attendance/<string:id>", methods=["POST"])
+def taken_attendance(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+
+        date = request.form.get("date")
+        teacher = current_user.get_id()
+        students = db.session.query(Student).filter_by(class_id=id)
+
+        for student in students:
+            attend = request.form.get("btnradio"+str(student.id))
+
+            if attend == "option1":
+                presence = "Present"
+            else:
+                presence = "Absent"
+
+            attendance_object = Attendance(teacher_id=teacher, class_id=id, student_id=student.id, date=date, presence=presence)
+            db.session.add(attendance_object)
+            db.session.commit()
+
+
+        class_inc = Class.query.filter_by(id=id).first()
+        class_inc.attendance_count += 1
+        db.session.merge(class_inc)
+        db.session.commit()
+
+
+        return redirect("/detail_class/"+id)

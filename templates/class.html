@@ -8,21 +8,24 @@
                 <a class="btn btn-secondary" href="/add_class" role="button">Add Class</a>
         </div>
         <div class="table-responsive">
-          <table class="table table-striped table-hover">
+          <table class="table table-hover">
                   <thead>
-                          <tr>
-                                  {% for header in headers %}
-                                  <th> {{ header }} </th>
-                                  {% endfor %}
-                          </tr>
+                      <tr>
+                          {% for header in headers %}
+                          <th id="header"> {{ header }} </th>
+                          {% endfor %}
+                      </tr>
+                  </thead>
+                  <tbody>
                           {% for class in classes %}
                           <tr>
-                                  <td><a href="/detail_class/{{class.id}}"> {{class.name}} </a></td>
-                                  <td> {{ class.lowest_age }} - {{ class.highest_age }} </td>
-                                  <td> {{ class.count }} </td>
+                              <td class="counterCell"></td>
+                              <td><a href="/detail_class/{{class.id}}"> {{class.name}} </a></td>
+                              <td> {{ class.lowest_age }} - {{ class.highest_age }} </td>
+                              <td> {{ class.student_count }} </td>
                           </tr>
                           {% endfor %}
-                  </thead>
+                  </body>
 
           </table>
         </div>

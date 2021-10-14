@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+        <h1>Attendance</h1>
+        <a class="btn btn-danger" href="/detail_class/{{ident}}" role="button">Back</a>
+                <hr>
+        <form action="/taken-attendance/{{ident}}" method="post">
+        <div class="col-md-12">
+            <label for="formGroupExampleInput" class="form-label" id="label-take-attendance-date">Date:</label>
+            {{ form.date(class="form-control", autocomplete="off", id="take-attendance-date" )}}
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+                <thead>
+                        <tr>
+                                {% for header in headers %}
+                                      <th id="header"> {{ header }} </th>
+                                {% endfor %}
+                        </tr>
+                </thead>
+                <tbody>
+                        {% for student in students %}
+                        <tr>
+                             <td class="counterCell"></td>
+                             <td>{{student.name}}</td>
+                             <td>
+                                <input type="radio" class="btn-check" name="btnradio{{student.id}}" id="{{student.id}}" value="option1" autocomplete="off" checked>
+                                <label class="btn btn-outline-success" for="{{student.id}}">Present</label>
+
+                                <input type="radio" class="btn-check" name="btnradio{{student.id}}" id="{{student.id}}2"  value="option2" autocomplete="off">
+                                <label class="btn btn-outline-danger" for="{{student.id}}2">Absent</label>
+                             </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+          </table>
+
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+
+
+
+
+
+{% endblock %}

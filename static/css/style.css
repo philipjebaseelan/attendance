@@ -209,3 +209,12 @@ main .form-control{
     width: 66px;
 }
 
+
+/* take-attendance.html */
+#label-take-attendance-date{
+    margin-left:19%;
+}
+
+#take-attendance-date{
+    margin-right:20%;
+}

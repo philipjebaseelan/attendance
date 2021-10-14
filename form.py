@@ -26,6 +26,9 @@ def class_age_checking(form, field):
     if lowest >= highest:
         raise ValidationError("Incorrect Age Group Format")
 
+
+
+
 #Forms
 
 #login Form
@@ -52,12 +55,12 @@ class RegisterUsers(FlaskForm):
 class AddStudents(FlaskForm):
     name = StringField(validators=[InputRequired()])
     dob = DateField(validators=[InputRequired()])
-    parent_name = StringField(validators=[InputRequired()])
-    parent_number = IntegerField(validators=[InputRequired()])
-    parent_email = StringField(validators=[InputRequired()])
-    parent2_name = StringField(validators=[InputRequired()])
-    parent2_number = IntegerField(validators=[InputRequired()])
-    parent2_email = StringField(validators=[InputRequired()])
+    parent_name = StringField()
+    parent_number = IntegerField()
+    parent_email = StringField()
+    parent2_name = StringField()
+    parent2_number = IntegerField()
+    parent2_email = StringField()
     address = StringField(validators=[InputRequired()])
     city = StringField(validators=[InputRequired()])
     postcode = IntegerField(validators=[InputRequired()])
@@ -77,3 +80,6 @@ class AddClass(FlaskForm):
 
         if class_object:
             raise ValidationError("Username already exist.")
+
+class TakeAttendance(FlaskForm):
+    date = DateField(validators=[InputRequired()])
