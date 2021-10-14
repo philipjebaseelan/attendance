@@ -263,8 +263,8 @@ def detail_class(id):
         class_object = Class.query.filter_by(id = id).first()
 
         students = Student.query.filter_by(class_id=id, teacher_id=teacher)
-
-        return render_template("detail-class.html", classes=class_object, headers=TABLE_HEADERS, students=students)
+        class_attendance = Attendance.query.filter_by(class_id=id, teacher_id=teacher)
+        return render_template("detail-class.html", classes=class_object, headers=TABLE_HEADERS, students=students, attendances=class_attendance)
 
 
 @app.route("/add_student_class/<string:id>")
@@ -334,12 +334,18 @@ def taken_attendance(id):
 
             if attend == "option1":
                 presence = "Present"
+                attendance_object = Attendance(teacher_id=teacher, class_id=id, student_id=student.id, date=date, presence=presence)
+                attend = db.session.query(Student).filter_by(id=student.id).first()
+                attend.attend_count += 1
+                db.session.add(attendance_object)
+                db.session.merge(attend)
+                db.session.commit()
+
             else:
                 presence = "Absent"
-
-            attendance_object = Attendance(teacher_id=teacher, class_id=id, student_id=student.id, date=date, presence=presence)
-            db.session.add(attendance_object)
-            db.session.commit()
+                attendance_object = Attendance(teacher_id=teacher, class_id=id, student_id=student.id, date=date, presence=presence)
+                db.session.add(attendance_object)
+                db.session.commit()
 
 
         class_inc = Class.query.filter_by(id=id).first()
@@ -349,3 +355,17 @@ def taken_attendance(id):
 
 
         return redirect("/detail_class/"+id)
+
+@app.route("/detail_attendance/<string:id>")
+def detail_attendance(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    else:
+        TABLE_HEADERS = ["No.", "Date", "Attendnace"]
+        student_object = db.session.query(Student).filter_by(id=id).first()
+        attendance_object = db.session.query(Attendance).filter_by(student_id=id).order_by(Attendance.date.desc())
+
+        return render_template("detail-attendance.html", headers=TABLE_HEADERS, attendances=attendance_object, student=student_object)

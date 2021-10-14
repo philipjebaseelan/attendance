@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block main %}
+        <h1>{{student.name}}</h1>
+        <hr>
+        <div class="d-grid gap-2 d-md-block">
+          <a class="btn btn-danger" id="detail-class-back" href="/detail_class/{{student.class_id}}" type="button">Back</a>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+                  <thead>
+                          <tr>
+                                  {% for header in headers %}
+                                  <th id="header"> {{ header }} </th>
+                                  {% endfor %}
+                          </tr>
+                  </thead>
+                  <tbody>
+                  {% for attendance in attendances %}
+                  <tr>
+                          <td class="counterCell"></td>
+                          <td>{{attendance.date}}</td>
+                          <td> {{attendance.presence }} </td>
+
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+
+          </table>
+        </div>
+{% endblock %}

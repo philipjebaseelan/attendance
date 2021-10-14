@@ -19,19 +19,19 @@
                                   <th id="header"> {{ header }} </th>
                                   {% endfor %}
                           </tr>
-                          <tbody>
-                          {% for student in students %}
-                          <tr>
-                                  <td class="counterCell"></td>
-                                  <td>{{student.name}}</td>
-                                  <td> {{student.age }} </td>
-                                  <td> {{student.parent}} </td>
-                                  <td> {{student.number}} </td>
-                                  <td > </td>
-                          </tr>
-                          {% endfor %}
-                  </tbody>
                   </thead>
+                  <tbody>
+                  {% for student in students %}
+                  <tr>
+                          <td class="counterCell"></td>
+                          <td>{{student.name}}</td>
+                          <td> {{student.age }} </td>
+                          <td> {{student.parent}} </td>
+                          <td> {{student.number}} </td>
+                          <td><a href="/detail_attendance/{{student.id}}">{{student.attend_count}} out of {{classes.attendance_count}} days</a></td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
 
           </table>
         </div>

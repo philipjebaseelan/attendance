@@ -38,6 +38,7 @@ class Student(db.Model):
     city = db.Column(db.String(), nullable=False)
     state = db.Column(db.String(), nullable=False)
     postcode = db.Column(db.Integer, nullable=False)
+    attend_count = db.Column(db.Integer, nullable=True, default=0)
 
     #REFERENCES
     student_attends = db.relationship("Attendance", backref="student_attend")
