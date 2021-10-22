@@ -2,6 +2,21 @@
     height:40px;
 }
 
+.alert{
+    width:78%;
+    top:88px;
+    left:227px;
+
+}
+
+.alert-message{
+    padding-left:20px;
+}
+
+.alert-message{
+    width:-webkit-fill-available;
+}
+
 .text-muted{
     --bs-text-opacity: 1;
     color: #ff0000!important;
@@ -24,6 +39,8 @@
     background-color: #0f7070;
     border-color: #0f7070;
 }
+
+
 
 table {
     counter-reset: tableCount;
@@ -59,7 +76,7 @@ main .form-control{
 }
 
 .p-5 {
-    padding: 7rem!important;
+    padding: 8rem!important;
 }
 
 .signin {

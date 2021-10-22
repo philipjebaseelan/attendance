@@ -1,6 +1,9 @@
-from flask import Flask, render_template, redirect, request, url_for
+import os
+
+from flask import Flask, render_template, redirect, request, flash
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from tempfile import mkdtemp
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -10,23 +13,28 @@ from datetime import date, datetime
 from form import *
 from models import *
 
-
-
+##################################################################################################################################################################################################################################
 
 #Initialising the application
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "LongAndRandomSecretKey"
+
+
+#Configuring Mailing Service
+
+
 
 #Configuring SQLite Database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///attendance.db"
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 db = SQLAlchemy(app)
 
+
 #Configuring Flask Login
 login = LoginManager(app)
 login.init_app(app)
 
-
+#Loading a User
 @login.user_loader
 def load_user(id):
     return Teacher.query.get(id)
@@ -35,6 +43,7 @@ def load_user(id):
 states = ["Kuala Lumpur", "labuan", "Putrajaya", "Terrengganu", "Selangor", "Sarawak", "Sabah", "Perlis", "Perak", "Penang", "Pahang", "Negeri Sembilan", "Malacca", "Kelantan", "Kedah", "Johor"]
 
 
+##################################################################################################################################################################################################################################
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -58,6 +67,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        flash("Registered succesfully. Please login.")
 
         return redirect("/login")
 
@@ -76,6 +86,9 @@ def login():
         username = request.form.get("username")
         user_object = Teacher.query.filter_by(username=username).first()
         login_user(user_object)
+
+
+        flash("Logged in Succefully!")
         return redirect("/")
 
     else:
@@ -84,6 +97,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
+    flash("Successfully Logged Out")
     return redirect("/login")
 
 
@@ -158,6 +172,7 @@ def add_student():
             db.session.add(student)
             db.session.commit()
 
+            flash("Succesfully Enrolled Student")
             return redirect("/registrar")
 
         else:
@@ -200,7 +215,7 @@ def delete_student(id):
         db.session.delete(student)
         db.session.commit()
 
-
+        flash("Successfully Removed Student")
 
         return redirect("/registrar")
 
@@ -243,6 +258,8 @@ def add_class():
             class_object = Class(teacher_id=teacher, name=name, lowest_age=lage, highest_age=hage)
             db.session.add(class_object)
             db.session.commit()
+
+            flash("Succesfully Created Class")
             return redirect("/class")
 
         else:
@@ -297,6 +314,8 @@ def added_student_class(id):
         db.session.merge(student)
         db.session.merge(class_inc)
         db.session.commit()
+
+        flash("Succesfully added Student's to class")
 
         return redirect("/detail_class/" +id)
 
@@ -353,6 +372,7 @@ def taken_attendance(id):
         db.session.merge(class_inc)
         db.session.commit()
 
+        flash("Attendance Taken")
 
         return redirect("/detail_class/"+id)
 
@@ -366,6 +386,9 @@ def detail_attendance(id):
     else:
         TABLE_HEADERS = ["No.", "Date", "Attendnace"]
         student_object = db.session.query(Student).filter_by(id=id).first()
+        class_id = student_object.class_id
         attendance_object = db.session.query(Attendance).filter_by(student_id=id).order_by(Attendance.date.desc())
+        new_attendance = db.session.query(Attendance).filter_by(class_id=class_id).group_by(Attendance.date)
 
-        return render_template("detail-attendance.html", headers=TABLE_HEADERS, attendances=attendance_object, student=student_object)
+
+        return render_template("detail-attendance.html", headers=TABLE_HEADERS, attendances=attendance_object, student=student_object, new_student=new_attendance)

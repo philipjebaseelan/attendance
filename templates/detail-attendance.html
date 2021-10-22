@@ -16,14 +16,25 @@
                           </tr>
                   </thead>
                   <tbody>
-                  {% for attendance in attendances %}
-                  <tr>
-                          <td class="counterCell"></td>
-                          <td>{{attendance.date}}</td>
-                          <td> {{attendance.presence }} </td>
+                    {% if student.attend_count == 0 %}
+                      {% for date in new_student %}
+                        <tr>
+                            <td class="counterCell"></td>
+                            <td>{{date.date}}</td>
+                            <td>Absent</td>
+                        </tr>
+                      {% endfor %}
 
-                  </tr>
-                  {% endfor %}
+                    {% else %}
+                      {% for attendance in attendances %}
+                        <tr>
+                            <td class="counterCell"></td>
+                            <td>{{attendance.date}}</td>
+                            <td> {{attendance.presence }} </td>
+
+                        </tr>
+                      {% endfor %}
+                    {% endif %}
                   </tbody>
 
           </table>
