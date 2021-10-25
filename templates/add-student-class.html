@@ -10,7 +10,11 @@
                 <thead>
                         <tr>
                                 {% for header in headers %}
+                                    {% if header == "#" %}
+                                      <th id="header" style="width:17%">{{header}}</th>
+                                    {% else %}
                                       <th id="header"> {{ header }} </th>
+                                    {% endif %}
                                 {% endfor %}
                         </tr>
                 </thead>
