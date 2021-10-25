@@ -40,6 +40,11 @@
     border-color: #0f7070;
 }
 
+.btn-outline-secondary{
+    width:55px;
+    height:26px;
+    line-height:0.75;
+}
 
 
 table {

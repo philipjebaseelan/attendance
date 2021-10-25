@@ -291,9 +291,12 @@ def add_student_class(id):
     if not current_user.is_authenticated:
         return redirect("/login")
     else:
-            val = None
-            null_students = Student.query.filter_by(class_id = 0)
-            return render_template("add-student-class.html", students=null_students, ident=id)
+
+            TABLE_HEADERS=["#","Name", "Age"]
+            teacher = current_user.get_id()
+            null_students = Student.query.filter_by(teacher_id=teacher, class_id = 0)
+            return render_template("add-student-class.html", students=null_students, headers=TABLE_HEADERS,ident=id)
+
 
 @app.route("/added_student_class/<string:id>", methods=["POST"])
 def added_student_class(id):
@@ -303,21 +306,25 @@ def added_student_class(id):
         return redirect("/login")
 
     else:
-        name = request.form.get("students")
+
         teacher = current_user.get_id()
         class_id = id
+        students = db.session.query(Student).filter_by(teacher_id=teacher, class_id=0)
 
-        student = Student.query.filter_by( name=name, teacher_id=teacher, class_id=0).first()
-        class_inc = Class.query.filter_by(id=class_id, teacher_id=teacher).first()
-        student.class_id = class_id
-        class_inc.student_count += 1
-        db.session.merge(student)
-        db.session.merge(class_inc)
-        db.session.commit()
+        for student in students:
+            status = request.form.get("btncheck"+str(student.id))
 
-        flash("Succesfully added Student's to class")
+            if status == "Add":
+                class_inc = db.session.query(Class).filter_by(id=class_id, teacher_id=teacher).first()
+                student.class_id = class_id
+                class_inc.student_count += 1
+                db.session.merge(student)
+                db.session.merge(class_inc)
+                db.session.commit()
+
 
         return redirect("/detail_class/" +id)
+
 
 @app.route("/take-attendance/<string:id>")
 def take_attendance(id):

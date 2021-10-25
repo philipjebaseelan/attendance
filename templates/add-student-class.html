@@ -5,17 +5,38 @@
     <h1>Add Student</h1>
     <hr>
     <form action="/added_student_class/{{ident}}" method="post">
-        <div class="form-group">
-            <select name="students">
-                <option disabled selected value="Student">Student</option>
-                {% for student in students %}
-                <option>{{ student.name }}</option>
-                {% endfor %}
-            </select>
+        <div class="table-responsive">
+          <table class="table table-hover">
+                <thead>
+                        <tr>
+                                {% for header in headers %}
+                                      <th id="header"> {{ header }} </th>
+                                {% endfor %}
+                        </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                             <td>
+                                 <input type="checkbox" class="btn-check" name="btncheck{{student.id}}" value="Add" id="{{student.id}}" autocomplete="off">
+                                 <label class="btn btn-outline-secondary" for="{{student.id}}">Add</label><br>
+                             </td>
+                             <td>{{student.name}}</td>
+                             <td>{{student.age}}</td>
+                        </tr>
+                        {% endfor %}
+
+                </tbody>
+          </table>
+
         </div>
+
         <div class="col-12" id="detail-col12">
                 <a class="btn btn-danger" href="/detail_class/{{ident}}" >Back</a>
                 <button class="btn btn-primary" type="submit">Add Student</button>
-            </div>
+        </div>
     </form>
 {% endblock %}
+
+
+
