@@ -205,12 +205,25 @@ def delete_student(id):
         teacher = current_user.get_id()
         student = db.session.query(Student).filter_by(id=id).first()
         class_id = student.class_id
+        class_object = db.session.query(Class).filter_by(id=class_id).first()
+        attendance = db.session.query(Attendance).filter_by(student_id=id)
 
         if class_id != 0:
-            class_object = db.session.query(Class).filter_by(id=class_id).first()
-            class_object.count -= 1
+            class_object.student_count -= 1
             db.session.merge(class_object)
-            db.session.flush
+            db.session.flush()
+
+        if class_object.student_count == 0:
+            class_object.attendance_count = 0
+            db.session.merge(class_object)
+            db.session.flush()
+
+        for attend in attendance:
+            db.session.delete(attend)
+            db.session.flush()
+
+
+
 
         db.session.delete(student)
         db.session.commit()
@@ -298,9 +311,15 @@ def delete_class(id):
 
         elif class_object.student_count != 0:
             students = db.session.query(Student).filter_by(class_id=id)
+            attendance= db.session.query(Attendance).filter_by(class_id=id)
+
+            for attend in attendance:
+                db.session.delete(attend)
+                db.session.flush()
 
             for student in students:
                 student.class_id = 0
+                student.attend_count = 0
                 db.session.merge(student)
                 db.session.flush()
 
