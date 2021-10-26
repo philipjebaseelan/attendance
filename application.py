@@ -283,6 +283,32 @@ def detail_class(id):
         class_attendance = Attendance.query.filter_by(class_id=id, teacher_id=teacher)
         return render_template("detail-class.html", classes=class_object, headers=TABLE_HEADERS, students=students, attendances=class_attendance)
 
+@app.route("/delete-class/<string:id>")
+def delete_class(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+        class_object = db.session.query(Class).filter_by(id=id).first()
+
+        if class_object.student_count == 0:
+            db.session.delete(class_object)
+            db.session.commit()
+
+        elif class_object.student_count != 0:
+            students = db.session.query(Student).filter_by(class_id=id)
+
+            for student in students:
+                student.class_id = 0
+                db.session.merge(student)
+                db.session.flush()
+
+            db.session.delete(class_object)
+            db.session.commit()
+
+        flash("Succesfully removed class.")
+        return redirect("/class")
 
 @app.route("/add_student_class/<string:id>")
 def add_student_class(id):

@@ -240,3 +240,34 @@ main .form-control{
 #take-attendance-date{
     margin-right:20%;
 }
+
+
+/* detail-class.html */
+#detail-class-del{
+    position:absolute;
+    left: 71.5%;
+    top:20%;
+}
+
+#detail-class-back{
+    position:absolute;
+    right: 74.5%;
+    top:20%;
+}
+
+#detail-class-attendance{
+    position:relative;
+    left: 0%;
+}
+
+#detail-class-add{
+    position:absolute;
+    left:69.2%;
+    top:24.5%;
+}
+
+#detail-class-export{
+    position:absolute;
+    left: 75.4%;
+    top:24.5%;
+}
