@@ -215,6 +215,12 @@ main .form-control{
     width: 100%;
 }
 
+#edit-student-detail{
+    position:absolute;
+    top:16.5%;
+    left:75%;
+
+}
 
 /* add-class.html */
 

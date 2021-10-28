@@ -17,6 +17,7 @@
                                   {% endfor %}
                           </tr>
                   </thead>
+                  {% if students != "None" %}
                   <tbody>
                           {% for student in students %}
                           <tr>
@@ -37,6 +38,7 @@
                           </tr>
                           {% endfor %}
                   </tbody>
+                  {% endif %}
           </table>
         </div>
         <hr>

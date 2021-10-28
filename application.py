@@ -110,6 +110,8 @@ def index():
 
     return render_template("layout.html")
 
+
+#############################################################STUDENTS############################################################################################
 @app.route("/registrar")
 def registrar():
 
@@ -120,9 +122,14 @@ def registrar():
         return redirect("/login")
     else:
         teacher = current_user.get_id()
-        student_object = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
         class_object = Class.query.all()
-        return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object, classes=class_object)
+
+        student_object = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
+
+        if not student_object:
+            return render_template("registrar.html", headers=TABLE_HEADERS, students="None", classes=class_object)
+        else:
+            return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object, classes=class_object)
 
 
 @app.route("/add_student", methods=["GET", "POST"])
@@ -167,8 +174,7 @@ def add_student():
                 gender = "Female"
 
 
-
-            student = Student(teacher_id=teacher, name=name, birth=dob, age=age, parent=father, parent2=mother, number=fnumber, number2=mnumber, email=femail, email2=memail, address=address, city=city, state=state, postcode=postcode)
+            student = Student(teacher_id=teacher, name=name, birth=dob, age=age, gender=gender, parent=father, parent2=mother, number=fnumber, number2=mnumber, email=femail, email2=memail, address=address, city=city, state=state, postcode=postcode)
             db.session.add(student)
             db.session.commit()
 
@@ -191,7 +197,6 @@ def student(id):
 
         student_object = Student.query.filter_by(id=id, teacher_id=teacher)
         class_object = Class.query.all()
-
 
         return render_template("detail-student.html", students = student_object, classes=class_object)
 
@@ -223,8 +228,6 @@ def delete_student(id):
             db.session.flush()
 
 
-
-
         db.session.delete(student)
         db.session.commit()
 
@@ -233,6 +236,58 @@ def delete_student(id):
         return redirect("/registrar")
 
 
+@app.route("/edit-student/<string:id>", methods=["GET","POST"])
+def edit_student(id):
+
+    form_edit_student = EditStudents()
+    student = db.session.query(Student).filter_by(id=id).first()
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+        if form_edit_student.validate_on_submit():
+
+            student.name = request.form.get("name")
+            dob = request.form.get("dob")
+            option = request.form.get("gender")
+            student.parent = request.form.get("parent_name")
+            student.number = request.form.get("parent_number")
+            student.email = request.form.get("parent_email")
+            student.parent2 = request.form.get("parent2_name")
+            student.number2 = request.form.get("parent2_number")
+            student.email2 = request.form.get("parent2_email")
+            student.address = request.form.get("address")
+            student.city = request.form.get("city")
+            student.state = request.form.get("state")
+            student.postcode = request.form.get("postcode")
+
+            #Calculating the age
+            today = datetime.today()
+            birthdate = datetime.strptime(dob, '%Y-%m-%d')
+            student.age = today.year - birthdate.year
+            student.birth = dob
+
+            #Storing the gender
+            if option == "option1":
+                student.gender = "Male"
+                db.session.flush()
+            else:
+                student.gender = "Female"
+                db.session.flush()
+
+            db.session.merge(student)
+            db.session.commit()
+
+            flash("Succesfully saved changes.")
+
+            return redirect("/detail_student/"+id)
+
+        else:
+            return render_template("edit-student.html", student=student, form=form_edit_student, states=states)
+
+
+#####################################################CLASSES##########################################################################################################
 
 @app.route("/class")
 def classes():

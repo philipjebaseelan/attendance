@@ -28,6 +28,7 @@ class Student(db.Model):
     name = db.Column(db.String(), nullable=False)
     birth = db.Column(db.String(),nullable=False)
     age = db.Column(db.Integer(), nullable=False)
+    gender = db.Column(db.String(), nullable=False)
     parent = db.Column(db.String(), nullable=True)
     parent2 = db.Column(db.String(), nullable=True)
     number = db.Column(db.Integer, nullable=True)

@@ -83,3 +83,22 @@ class AddClass(FlaskForm):
 
 class TakeAttendance(FlaskForm):
     date = DateField(validators=[InputRequired()])
+
+#Edit Student Form
+
+class EditStudents(FlaskForm):
+    name = StringField(validators=[InputRequired()])
+    dob = DateField(validators=[InputRequired()])
+    parent_name = StringField()
+    parent_number = IntegerField()
+    parent_email = StringField()
+    parent2_name = StringField()
+    parent2_number = IntegerField()
+    parent2_email = StringField()
+    address = StringField(validators=[InputRequired()])
+    city = StringField(validators=[InputRequired()])
+    postcode = IntegerField(validators=[InputRequired()])
+
+    def validate_state(self, state):
+        if state.data == "State":
+            raise ValidationError("Please select your state.")

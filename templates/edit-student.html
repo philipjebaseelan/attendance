@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+        {% for field, errors in form.errors.items() %}
+                <small class="form-text text-muted ">
+                    {{ ', '.join(errors) }}
+                </small>
+        {% endfor %}
+
+        <h1>Editing {{student.name}}'s Details</h1>
+                <hr>
+
+        <form class="row g-3" action="/edit-student/{{student.id}}" method="post">
+                {{ form.csrf_token() }}
+
+                <!-- Student's Detials  -->
+                <div class="col-md-6">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-name">Student's Name:</label>
+                        {{ form.name(class="form-control", placeholder="Student's Name", autocomplete="off", id="add-student-name", value=student.name) }}
+                </div>
+                <div class="col-md-6">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-dob">Student's Birth date:</label>
+                        {{ form.dob(class="form-control", autocomplete="off", id="add-student-dob", value=student.birth)}}
+                </div>
+
+                {% if student.gender == "Male" %}
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-gender">Gender:</label>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="gender" id="gender" value="option1" checked>
+                          <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                           <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="option2">
+                           <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
+                </div>
+                {% elif student.gender == "Female" %}
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-gender">Gender:</label>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="gender" id="gender" value="option1" >
+                          <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                           <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="option2" checked>
+                           <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
+                </div>
+                {% endif %}
+
+
+
+                <!-- Father's Details -->
+                <div class="col-md-6">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fname" >Father's Name:</label>
+                        {{ form.parent_name(class="form-control", placeholder="Father's Name", autocomplete="off", id="add-student-fname", value=student.parent) }}
+                </div>
+                <div class="col-md-4">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fnumber">Father's Number:</label>
+                        {{ form.parent_number(class="form-control", placeholder="Contact Number", autocomplete="off", id="add-student-fnumber", value=student.number) }}
+                </div>
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-femail">Father's Email:</label>
+                        {{ form.parent_email(class="form-control", placeholder="Email Adrress", autocomplete="off", id="add-student-femail", type="email", value=student.email) }}
+                </div>
+
+                <!-- Mother's Detials -->
+                <div class="col-md-6">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fname" >Mother's Name:</label>
+                        {{ form.parent2_name(class="form-control", placeholder="Mother's Name", autocomplete="off", id="add-student-fname", value=student.parent2) }}
+                </div>
+                <div class="col-md-4">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-fnumber">Mother's Number:</label>
+                        {{ form.parent2_number(class="form-control", placeholder="Contact Number", autocomplete="off", id="add-student-fnumber", value=student.number2) }}
+                </div>
+                <div class="col-md-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-femail">Mother's Email:</label>
+                        {{ form.parent2_email(class="form-control", placeholder="Email Adrress", autocomplete="off", id="add-student-femail", type="email", value=student.email2) }}
+                </div>
+
+                <!-- Address -->
+                <div class="col-12">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-address">Address:</label>
+                        {{ form.address(class="form-control", placeholder="Address", autocomplete="off", id="add-student-address", value=student.address) }}
+                </div>
+                <div class="col-6">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-city">City:</label>
+                        {{ form.city(class="form-control", placeholder="City", autocomplete="off", id="add-student-city", value=student.city) }}
+                </div>
+                <div class="col-md-2">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-state">State:</label>
+                        <select class="form-select" aria-la
+                        bel="Default select example" name="state">
+                                  <option>{{student.state}}</option>
+                                  {% for state in states %}
+                                    {% if student.state != state %}
+                                      <option>{{state}}</option>
+                                    {% endif %}
+                                  {% endfor %}
+                        </select>
+                </div>
+                <div class="col-md-2">
+                        <label for="formGroupExampleInput" class="form-label" id="label-add-student-postcode">Postcode:</label>
+                        {{ form.postcode(class="form-control", placeholder="Postcode", autocomplete="off", id="add-student-postcode", value=student.postcode) }}
+                </div>
+
+                <!-- Butoons -->
+                <div class="col-12">
+                        <a href="/detail_student/{{student.id}}" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+
+        </form>
+        <hr>
+
+{% endblock %}
+
+
