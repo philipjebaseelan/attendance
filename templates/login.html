@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 
+{%block sidebar%} {{teacher.name}} {% endblock sidebar %}
+
 {% block main %}
-           
+
             {% for field, errors in form.errors.items() %}
                 <small class="form-text text-muted ">
                     {{ ', '.join(errors) }}

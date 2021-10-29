@@ -46,6 +46,9 @@
     line-height:0.75;
 }
 
+#btn-remove-student{
+    width:81px;
+}
 
 table {
     counter-reset: tableCount;
@@ -219,8 +222,9 @@ main .form-control{
     position:absolute;
     top:16.5%;
     left:75%;
-
 }
+
+
 
 /* add-class.html */
 
@@ -255,6 +259,12 @@ main .form-control{
     top:20%;
 }
 
+#detail-class-rem-student{
+    position:absolute;
+    left:63.8%;
+    top:20%;
+}
+
 #detail-class-back{
     position:absolute;
     right: 74.5%;
@@ -276,4 +286,11 @@ main .form-control{
     position:absolute;
     left: 75.4%;
     top:24.5%;
+}
+
+
+/* detail-attendance.html */
+
+#detail-attendance-class-back{
+    position:relative;
 }

@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
 
+{%block sidebar%} {{teacher.name}} {% endblock sidebar %}
+
 {% block main %}
         <h1>{{student.name}}</h1>
         <hr>
         <div class="d-grid gap-2 d-md-block">
-          <a class="btn btn-danger" id="detail-class-back" href="/detail_class/{{student.class_id}}" type="button">Back</a>
+          <a class="btn btn-danger" id="detail-attendance-class-back" href="/detail_class/{{student.class_id}}" type="button">Back</a>
         </div>
         <div class="table-responsive">
           <table class="table table-hover">

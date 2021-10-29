@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{%block sidebar%} {{teacher.name}}{% endblock sidebar %}
+{%block sidebar%} {{teacher.name}} {% endblock sidebar %}
 
 {% block main %}
 
-    <h1>Add Student</h1>
+    <h1>Remove Student's from {{classes.name}}</h1>
     <hr>
-    <form action="/added_student_class/{{ident}}" method="post">
+    <form action="/remove-student-class/{{classes.id}}" method="post">
         <div class="table-responsive">
           <table class="table table-hover">
                 <thead>
@@ -24,11 +24,10 @@
                     {% for student in students %}
                         <tr>
                              <td>
-                                 <input type="checkbox" class="btn-check" name="btncheck{{student.id}}" value="Add" id="{{student.id}}" autocomplete="off">
-                                 <label class="btn btn-outline-secondary" for="{{student.id}}">Add</label><br>
+                                 <input type="checkbox" class="btn-check" name="btncheck{{student.id}}" value="Remove" id="{{student.id}}" autocomplete="off">
+                                 <label class="btn btn-outline-secondary" for="{{student.id}}" id="btn-remove-student">Remove</label><br>
                              </td>
                              <td>{{student.name}}</td>
-                             <td>{{student.age}}</td>
                         </tr>
                         {% endfor %}
 
@@ -38,8 +37,8 @@
         </div>
 
         <div class="col-12" id="detail-col12">
-                <a class="btn btn-danger" href="/detail_class/{{ident}}" >Back</a>
-                <button class="btn btn-primary" type="submit">Add Student</button>
+                <a class="btn btn-danger" href="/detail_class/{{classes.id}}" >Back</a>
+                <button class="btn btn-primary" type="submit">Remove Student's</button>
         </div>
     </form>
 {% endblock %}
