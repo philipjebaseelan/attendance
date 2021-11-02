@@ -49,6 +49,7 @@ states = ["Kuala Lumpur", "labuan", "Putrajaya", "Terrengganu", "Selangor", "Sar
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
+    #initialising the form
     form_register = RegisterUsers()
 
     if form_register.validate_on_submit():
@@ -109,30 +110,60 @@ def index():
         return redirect("/login")
 
     else:
+
+        #Passing the teachers Name
         teacher = current_user.get_id()
         teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
-        return render_template("index.html", teacher=teacher_object)
 
+        #Table Header
+        TABLE_HEADERS = ["#", "Name", "Class", "Attendance"]
+        return render_template("index.html", teacher=teacher_object, headers=TABLE_HEADERS)
+
+        #Fetching the students registered to the user
+        students_object = db.session.query(Student).filter_by(teacher_id=teacher)
+        class_object = db.session.query(Class).filter_by(teacher_id=teacher)
 
 #############################################################STUDENTS############################################################################################
-@app.route("/registrar")
+@app.route("/registrar", methods=["GET", "POST"])
 def registrar():
 
+    #Global Variables
     TABLE_HEADERS=["No.", "Name", "Class", "Age", "Parent Name", "Contact Number"]
 
     #Ensuring User is logged in
     if not current_user.is_authenticated:
         return redirect("/login")
     else:
-        teacher = current_user.get_id()
-        class_object = Class.query.all()
-        teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
-        student_object = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
+        if request.method == "POST":
+            teacher = current_user.get_id()
+            class_object = Class.query.all()
+            teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
 
-        if not student_object:
-            return render_template("registrar.html", headers=TABLE_HEADERS, students="None", classes=class_object)
+
+            tag = request.form.get("tag")
+
+            if not tag:
+                return redirect("/registrar")
+
+            search = "%{}%".format(tag)
+            student_object = Student.query.filter(Student.name.like(search))
+
+            print(student_object)
+            if not student_object:
+                return render_template("registrar.html", headers=TABLE_HEADERS, students="None", classes=class_object, teacher=teacher_object)
+            else:
+                return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object, classes=class_object, teacher=teacher_object )
+
         else:
-            return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object, classes=class_object, teacher=teacher_object )
+            teacher = current_user.get_id()
+            class_object = Class.query.all()
+            teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
+            student_object = Student.query.filter_by(teacher_id = teacher).order_by(Student.id.desc()).all()
+
+            if not student_object:
+                return render_template("registrar.html", headers=TABLE_HEADERS, students="None", classes=class_object, teacher=teacher_object)
+            else:
+                return render_template("registrar.html", headers=TABLE_HEADERS, students=student_object, classes=class_object, teacher=teacher_object )
 
 
 @app.route("/add_student", methods=["GET", "POST"])
@@ -233,10 +264,12 @@ def delete_student(id):
             db.session.merge(class_object)
             db.session.flush()
 
-        if class_object.student_count == 0:
-            class_object.attendance_count = 0
-            db.session.merge(class_object)
-            db.session.flush()
+
+        if class_object != None:
+            if class_object.student_count == 0:
+                class_object.attendance_count = 0
+                db.session.merge(class_object)
+                db.session.flush()
 
         for attend in attendance:
             db.session.delete(attend)
@@ -248,7 +281,7 @@ def delete_student(id):
 
         flash("Successfully Removed Student")
 
-        return redirect("/registrar", teacher=teacher_object)
+        return redirect("/registrar")
 
 
 @app.route("/edit-student/<string:id>", methods=["GET","POST"])

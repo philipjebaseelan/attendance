@@ -4,6 +4,34 @@
 
 {% block main %}
 
+<h1>Highest Attendance </h1>
+        <hr>
+        <div class="table-responsive">
+          <table class="table table-hover">
+                  <thead>
+                          <tr>
+                                  {% for header in headers %}
+                                  <th id="header"> {{ header }} </th>
+                                  {% endfor %}
+                          </tr>
+                  </thead>
 
+          </table>
+        </div>
+
+<h1>Lowest Attendance </h1>
+        <hr>
+        <div class="table-responsive">
+          <table class="table table-hover">
+                  <thead>
+                          <tr>
+                                  {% for header in headers %}
+                                  <th id="header"> {{ header }} </th>
+                                  {% endfor %}
+                          </tr>
+                  </thead>
+
+          </table>
+        </div>
 
 {% endblock %}

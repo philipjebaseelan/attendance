@@ -294,3 +294,28 @@ main .form-control{
 #detail-attendance-class-back{
     position:relative;
 }
+
+
+
+/* registrar.html */
+#registrar-export{
+    position: relative;
+    left:40%;
+}
+
+#registrar-add-student{
+    position: relative;
+    left:40%;
+}
+
+#registrar-search{
+    position:relative;
+    right:38.5%;
+}
+
+#registrar-search-btn{
+    position:relative;
+    right:38%;
+    width:45;
+    height:39px;
+}

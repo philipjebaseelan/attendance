@@ -65,10 +65,6 @@ class AddStudents(FlaskForm):
     city = StringField(validators=[InputRequired()])
     postcode = IntegerField(validators=[InputRequired()])
 
-    def validate_state(self, state):
-        if state.data == "State":
-            raise ValidationError("Please select your state.")
-
 #Add Class Form
 class AddClass(FlaskForm):
     name = StringField(validators=[InputRequired()])
