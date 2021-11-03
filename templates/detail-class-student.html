@@ -6,7 +6,7 @@
 
     {% for student in students %}
         <h1>{{student.name}}</h1>
-        <a class="btn btn-info" id="edit-student-detail" href="/edit-student/{{student.id}}" type="button">Edit</a>
+        <a class="btn btn-info" id="edit-student-detail" href="/detail-class-edit-student/{{student.id}}" type="button">Edit</a>
         <hr>
             <div class="col-4" id="detail-col4">
                 <b>Student's Name:</b> {{student.name}}
@@ -93,8 +93,7 @@
             </div>
             <hr>
             <div class="col-12" id="detail-col12">
-                <a href="/registrar" class="btn btn-primary">Back</a>
-                <a href="/delete_student/{{student.id}}" class="btn btn-danger">Delete Student</a>
+                <a href="/detail_class/{{student.class_id}}" class="btn btn-primary">Back</a>
             </div>
     {% endfor %}
 

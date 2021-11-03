@@ -34,7 +34,7 @@
                   {% for student in students %}
                   <tr>
                           <td class="counterCell"></td>
-                          <td>{{student.name}}</td>
+                          <td><a href="/detail-class-student/{{student.id}}">{{student.name}}</a></td>
                           <td> {{student.age }} </td>
                           {% if student.parent == "" %}
                             <td> {{student.parent2 }}</td>

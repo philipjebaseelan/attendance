@@ -47,9 +47,13 @@ class RegisterUsers(FlaskForm):
 
     def validate_username(self, username):
         user_object = Teacher.query.filter_by(username=username.data).first()
-
         if user_object:
             raise ValidationError("Username already exist.")
+
+    def validate_email(self, email):
+        user_object = Teacher.query.filter_by(email=email.data).first()
+        if user_object:
+            raise ValidationError("An Account has been registered with the email. Please Sign-In.")
 
 #Add Student Form
 class AddStudents(FlaskForm):

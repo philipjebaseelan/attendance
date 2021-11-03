@@ -316,13 +316,13 @@ main .form-control{
 }
 
 #registrar-search{
-    position:relative;
+    float:left;
     right:38.5%;
 }
 
 #registrar-search-btn{
     position:relative;
-    right:38%;
-    width:45;
-    height:39px;
+    right:38.8%;
+    width:39px;
+    height:38.49px;
 }

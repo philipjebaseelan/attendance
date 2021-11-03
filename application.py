@@ -545,6 +545,73 @@ def remove_student_class(id):
         else:
             return render_template("remove-student-class.html", headers=TABLE_HEADERS, students=students, classes=class_object, teacher=teacher_object)
 
+@app.route("/detail-class-student/<string:id>")
+def detail_class_student(id):
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+        teacher = current_user.get_id()
+        teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
+        student_object = Student.query.filter_by(id=id, teacher_id=teacher)
+        class_object = Class.query.all()
+
+        return render_template("detail-class-student.html", students=student_object, classes=class_object, teacher=teacher_object)
+
+@app.route("/detail-class-edit-student/<string:id>", methods=["GET","POST"])
+def detail_class_edit_student(id):
+
+    form_edit_student = EditStudents()
+    student = db.session.query(Student).filter_by(id=id).first()
+    teacher = current_user.get_id()
+    teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
+
+    #Ensuring User is logged in
+    if not current_user.is_authenticated:
+        return redirect("/login")
+    else:
+        if form_edit_student.validate_on_submit():
+
+            student.name = request.form.get("name")
+            dob = request.form.get("dob")
+            option = request.form.get("gender")
+            student.parent = request.form.get("parent_name")
+            student.number = request.form.get("parent_number")
+            student.email = request.form.get("parent_email")
+            student.parent2 = request.form.get("parent2_name")
+            student.number2 = request.form.get("parent2_number")
+            student.email2 = request.form.get("parent2_email")
+            student.address = request.form.get("address")
+            student.city = request.form.get("city")
+            student.state = request.form.get("state")
+            student.postcode = request.form.get("postcode")
+
+            #Calculating the age
+            today = datetime.today()
+            birthdate = datetime.strptime(dob, '%Y-%m-%d')
+            student.age = today.year - birthdate.year
+            student.birth = dob
+
+            #Storing the gender
+            if option == "option1":
+                student.gender = "Male"
+                db.session.flush()
+            else:
+                student.gender = "Female"
+                db.session.flush()
+
+            db.session.merge(student)
+            db.session.commit()
+
+            flash("Succesfully saved changes.")
+
+            return redirect("/detail-class-student/"+ str(student.id))
+
+        else:
+            return render_template("detail-class-edit-student.html", student=student, form=form_edit_student, states=states, teacher=teacher_object)
+
+
 #####################################################ATTENDANCE#####################################################################
 
 @app.route("/take-attendance/<string:id>")
