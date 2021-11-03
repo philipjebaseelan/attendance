@@ -36,8 +36,13 @@
                           <td class="counterCell"></td>
                           <td>{{student.name}}</td>
                           <td> {{student.age }} </td>
-                          <td> {{student.parent}} </td>
-                          <td> {{student.number}} </td>
+                          {% if student.parent == "" %}
+                            <td> {{student.parent2 }}</td>
+                            <td> {{student.number2 }}</td>
+                          {% else %}
+                            <td> {{student.parent}} </td>
+                            <td> {{student.number}} </td>
+                          {% endif %}
                           <td><a href="/detail_attendance/{{student.id}}">{{student.attend_count}} out of {{classes.attendance_count}} days</a></td>
                   </tr>
                   {% endfor %}

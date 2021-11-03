@@ -46,6 +46,13 @@
     line-height:0.75;
 }
 
+.btn-outline-light{
+    background-color:#f2f2f2;
+    color:black;
+    height:80px;
+}
+
+
 #btn-remove-student{
     width:81px;
 }

@@ -491,7 +491,7 @@ def added_student_class(id):
                 db.session.commit()
 
 
-        return redirect("/detail_class/" +class_id, teacher=teacher_object)
+        return redirect("/detail_class/" +class_id)
 
 
 @app.route("/remove-student-class/<string:id>", methods=["GET","POST"])
@@ -537,6 +537,8 @@ def remove_student_class(id):
                         db.session.flush()
 
                     db.session.commit()
+
+            flash("Succesfully removed Student's from Class.")
 
             return redirect("/detail_class/" +id)
 
@@ -606,7 +608,7 @@ def taken_attendance(id):
 
         flash("Attendance Taken")
 
-        return redirect("/detail_class/"+id, teacher=teacher_object)
+        return redirect("/detail_class/"+id)
 
 @app.route("/detail_attendance/<string:id>")
 def detail_attendance(id):
