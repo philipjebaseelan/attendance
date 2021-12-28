@@ -285,13 +285,7 @@ main .form-control{
 
 #detail-class-add{
     position:absolute;
-    left:69.2%;
-    top:24.5%;
-}
-
-#detail-class-export{
-    position:absolute;
-    left: 75.4%;
+    left:71.5%;
     top:24.5%;
 }
 
@@ -305,14 +299,9 @@ main .form-control{
 
 
 /* registrar.html */
-#registrar-export{
-    position: relative;
-    left:40%;
-}
-
 #registrar-add-student{
     position: relative;
-    left:40%;
+    left:44%;
 }
 
 #registrar-search{

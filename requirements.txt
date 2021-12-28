@@ -1,0 +1,16 @@
+flask_wtf
+flask
+flask_login
+flask_sqlalchemy
+flask_mail
+flask_wtf
+tempfile
+wtforms
+wtforms.validators
+wtforms.fields.html5
+passlib.hash
+flask_sqlalchemy
+flask_login
+os
+datetime
+

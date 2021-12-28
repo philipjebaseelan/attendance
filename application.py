@@ -20,10 +20,6 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "LongAndRandomSecretKey"
 
 
-#Configuring Mailing Service
-
-
-
 #Configuring SQLite Database
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///attendance.db"
 SQLALCHEMY_TRACK_MODIFICATIONS = True
@@ -115,13 +111,11 @@ def index():
         teacher = current_user.get_id()
         teacher_object = db.session.query(Teacher).filter_by(id=teacher).first()
 
-        #Table Header
-        TABLE_HEADERS = ["#", "Name", "Class", "Attendance"]
-        return render_template("index.html", teacher=teacher_object, headers=TABLE_HEADERS)
-
-        #Fetching the students registered to the user
-        students_object = db.session.query(Student).filter_by(teacher_id=teacher)
+        #Classes
         class_object = db.session.query(Class).filter_by(teacher_id=teacher)
+
+        return render_template("index.html", teacher=teacher_object)
+
 
 #############################################################STUDENTS############################################################################################
 @app.route("/registrar", methods=["GET", "POST"])
@@ -148,7 +142,7 @@ def registrar():
             search = "%{}%".format(tag)
             student_object = Student.query.filter(Student.name.like(search))
 
-            print(student_object)
+
             if not student_object:
                 return render_template("registrar.html", headers=TABLE_HEADERS, students="None", classes=class_object, teacher=teacher_object)
             else:
